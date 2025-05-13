@@ -11,18 +11,16 @@ RUN apt update -y \
     curl \
     build-essential \
     libssl-dev \
-    docker \
+    docker-buildx \
     docker-compose \
     jq \
     sudo
 
 # Set up the actions runner
 RUN cd /home/docker && mkdir actions-runner && cd actions-runner \
-    && curl -o actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz -L https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
-    && tar xzf actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
-
-# Change ownership to docker user and install dependencies
-RUN chown -R docker /home/docker && /home/docker/actions-runner/bin/installdependencies.sh
+  && curl -o actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz -L https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
+  && tar xzf actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
+  && chown -R docker /home/docker && /home/docker/actions-runner/bin/installdependencies.sh
 
 # Copy the start script and make it executable
 COPY scripts/entrypoint.sh /entrypoint.sh
