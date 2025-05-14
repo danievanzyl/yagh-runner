@@ -11,6 +11,11 @@ RUN apt update -y \
     curl \
     build-essential \
     libssl-dev \
+    libffi-dev \
+    python3 \
+    python3-venv \
+    python3-dev \
+    python3-pip \
     docker-buildx \
     docker-compose \
     jq \
