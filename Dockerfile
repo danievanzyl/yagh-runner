@@ -24,6 +24,7 @@ RUN apt update -y \
     python3-dev \
     python3-pip \
     docker-ce \
+    docker-compose-plugin \
     jq \
     sudo
 
