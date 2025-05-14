@@ -2,13 +2,20 @@ FROM ubuntu:20.04
 
 ARG RUNNER_VERSION="2.323.0"
 ARG DEBIAN_FRONTEND=noninteractive
-
 # Update and upgrade the system
 RUN apt update -y \
   && apt upgrade -y \
   && useradd -m docker \
   && apt install -y --no-install-recommends \
+    apt-transport-https \
+    ca-certificates \
+    software-properties-common \
     curl \
+    gpg-agent \
+  && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
+  && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" \
+  && apt-cache policy docker-ce \
+  && apt install -y --no-install-recommends \
     build-essential \
     libssl-dev \
     libffi-dev \
@@ -16,8 +23,7 @@ RUN apt update -y \
     python3-venv \
     python3-dev \
     python3-pip \
-    docker-buildx \
-    docker-compose \
+    docker-ce \
     jq \
     sudo
 
