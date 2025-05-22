@@ -3,12 +3,13 @@
 REPO=$REPO
 REG_TOKEN=$REG_TOKEN
 NAME=$NAME
-
-cd /home/docker/actions-runner || exit
+RUNNER_HOME=/home/docker/actions-runner
+cd ${RUNNER_HOME} || exit
 ./config.sh --url https://github.com/${REPO} --token ${REG_TOKEN} --name ${NAME}
 
 cleanup() {
   echo "Removing runner..."
+  cd ${RUNNER_HOME} || exit
   ./config.sh remove --unattended --token ${REG_TOKEN}
 }
 
